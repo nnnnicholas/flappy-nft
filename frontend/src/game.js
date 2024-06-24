@@ -118,7 +118,7 @@ class FlappyNFT extends Phaser.Scene {
         if (this.gameOver) return;
     
         const pipeWidth = 70;
-        const pipeHeight = 430;
+        const pipeHeight = 430; // Original height of the pipe sprite
         const pipeHorizontalSpacing = 400;
     
         // Randomly choose the size of the gap, between 150 and 250 pixels
@@ -129,7 +129,7 @@ class FlappyNFT extends Phaser.Scene {
     
         // Create pipes
         const topPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, topPipeBottomY - pipeHeight / 2, 'pipe');
-        const bottomPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, this.gameHeight + pipeHeight / 2, 'pipe');
+        const bottomPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, topPipeBottomY + this.pipeVerticalSpacing + pipeHeight / 2, 'pipe');
     
         // Set up pipe properties
         [topPipe, bottomPipe].forEach(pipe => {
