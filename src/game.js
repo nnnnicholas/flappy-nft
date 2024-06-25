@@ -125,19 +125,26 @@ class FlappyNFT extends Phaser.Scene {
         this.pipeVerticalSpacing = Phaser.Math.Between(150, 250);
     
         // Calculate the Y position for the bottom of the top pipe
-        const topPipeBottomY = Phaser.Math.Between(50, this.gameHeight - this.pipeVerticalSpacing - 50);
+        const topPipeBottomY = Phaser.Math.Between(0, this.gameHeight - this.pipeVerticalSpacing);
     
         // Create pipes
-        const topPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, topPipeBottomY - pipeHeight / 2, 'pipe');
-        const bottomPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, topPipeBottomY + this.pipeVerticalSpacing + pipeHeight / 2, 'pipe');
+        const topPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, 0, 'pipe');
+        const bottomPipe = this.pipes.create(this.sys.game.config.width + pipeWidth / 2, this.gameHeight, 'pipe');
     
         // Set up pipe properties
         [topPipe, bottomPipe].forEach(pipe => {
             pipe.body.allowGravity = false;
             pipe.body.velocity.x = -200;
             pipe.body.immovable = true;
-            pipe.setDisplaySize(pipeWidth, pipeHeight);
         });
+    
+        // Set pipe heights
+        topPipe.setDisplaySize(pipeWidth, topPipeBottomY);
+        bottomPipe.setDisplaySize(pipeWidth, this.gameHeight - (topPipeBottomY + this.pipeVerticalSpacing));
+    
+        // Set pipe origins
+        topPipe.setOrigin(0.5, 0);
+        bottomPipe.setOrigin(0.5, 1);
     
         // Flip the top pipe
         topPipe.setFlipY(true);

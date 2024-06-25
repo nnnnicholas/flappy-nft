@@ -47,7 +47,7 @@ async function startGame() {
         showLoadingMessage('Loading game...');
         const nftImage = new Image();
         nftImage.src = selectedNFT.image_url;
-        
+
         nftImage.onload = () => {
             hideLoadingMessage();
             const config = {
@@ -62,16 +62,17 @@ async function startGame() {
                         debug: false
                     }
                 },
-                scene: FlappyNFT
+                scene: FlappyNFT,
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.CENTER_BOTH
+                }
             };
 
             const game = new Phaser.Game(config);
             game.scene.start('FlappyNFT', { nftImage: selectedNFT.image_url });
-
-            window.addEventListener('resize', () => {
-                game.scale.resize(window.innerWidth, window.innerHeight);
-            });
         };
+
 
         nftImage.onerror = () => {
             throw new Error("Failed to load the NFT image. Please try again.");
